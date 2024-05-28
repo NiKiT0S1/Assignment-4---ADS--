@@ -52,12 +52,12 @@ public class WeightedGraph<Vertex> {
     }
 
     public Map<Vertex, Double> getAdjacentVertices(Vertex v) {
-        return map.get(v);
+        return map.getOrDefault(v, new HashMap<>());
     }
 
     public void printGraph() {
         for (Map.Entry<Vertex, Map<Vertex, Double>> entry : map.entrySet()) {
-            System.out.print("Vertex: " + entry.getKey() + "is connected to: ");
+            System.out.print("Vertex " + entry.getKey() + " is connected to: ");
             for (Map.Entry<Vertex, Double> e : entry.getValue().entrySet()) {
                 System.out.print(e.getKey() + " (weight " + e.getValue() + "), ");
             }
@@ -65,3 +65,4 @@ public class WeightedGraph<Vertex> {
         }
     }
 }
+
