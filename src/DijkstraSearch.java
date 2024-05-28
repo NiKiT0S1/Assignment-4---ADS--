@@ -8,11 +8,14 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
         super(source);
         distTo = new HashMap<>();
         pq = new PriorityQueue<>(Comparator.comparing(distTo::get));
+
         for (Vertex v : graph.getAdjacentVertices(source).keySet()) {
             distTo.put(v, Double.POSITIVE_INFINITY);
         }
+
         distTo.put(source, 0.0);
         pq.add(source);
+
         while (!pq.isEmpty()) {
             Vertex v = pq.poll();
             for (Map.Entry<Vertex, Double> entry : graph.getAdjacentVertices(v).entrySet()) {
@@ -22,6 +25,7 @@ public class DijkstraSearch<Vertex> extends Search<Vertex> {
     }
 
     private void relax(Vertex v, Vertex w, double weight) {
+        distTo.putIfAbsent(w, Double.POSITIVE_INFINITY);
         double distThroughV = distTo.get(v) + weight;
         if (distTo.get(w) > distThroughV) {
             distTo.put(w, distThroughV);
