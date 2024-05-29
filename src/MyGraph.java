@@ -1,17 +1,32 @@
+/**
+ * MyGraph represents an unweighted graph. It can be directed or undirected based on the constructor parameter.
+ * It provides methods to add vertices and edges, and to query the graph's structure.
+ */
 import java.util.*;
 
 public class MyGraph<Vertex> {
     private final boolean undirected;
     private final Map<Vertex, List<Vertex>> map = new HashMap<>();
 
+    /**
+     * Default constructor for creating an undirected graph.
+     */
     public MyGraph() {
         this(true);
     }
 
+    /**
+     * Constructor for creating a graph with a specified direction.
+     * @param undirected Boolean indicating whether the graph is undirected
+     */
     public MyGraph(boolean undirected) {
         this.undirected = undirected;
     }
 
+    /**
+     * Adds a vertex to the graph if it does not already exist.
+     * @param v The vertex to add
+     */
     public void addVertex(Vertex v) {
         if (hasVertex(v))
             return;
@@ -19,6 +34,11 @@ public class MyGraph<Vertex> {
         map.put(v, new LinkedList<>());
     }
 
+    /**
+     * Adds an edge between two vertices. If the graph is undirected, adds an edge in both directions.
+     * @param source The source vertex
+     * @param dest The destination vertex
+     */
     public void addEdge(Vertex source, Vertex dest) {
         if (!hasVertex(source))
             addVertex(source);
@@ -26,8 +46,7 @@ public class MyGraph<Vertex> {
         if (!hasVertex(dest))
             addVertex(dest);
 
-        if (hasEdge(source, dest)
-                || source.equals(dest))
+        if (hasEdge(source, dest) || source.equals(dest))
             return; // reject parallels & self-loops
 
         map.get(source).add(dest);
@@ -36,10 +55,18 @@ public class MyGraph<Vertex> {
             map.get(dest).add(source);
     }
 
+    /**
+     * Returns the number of vertices in the graph.
+     * @return The number of vertices
+     */
     public int getVerticesCount() {
         return map.size();
     }
 
+    /**
+     * Returns the number of edges in the graph.
+     * @return The number of edges
+     */
     public int getEdgesCount() {
         int count = 0;
         for (Vertex v : map.keySet()) {
@@ -52,72 +79,33 @@ public class MyGraph<Vertex> {
         return count;
     }
 
-
+    /**
+     * Checks if the graph contains a specific vertex.
+     * @param v The vertex to check
+     * @return True if the vertex exists, false otherwise
+     */
     public boolean hasVertex(Vertex v) {
         return map.containsKey(v);
     }
 
+    /**
+     * Checks if there is an edge between two vertices.
+     * @param source The source vertex
+     * @param dest The destination vertex
+     * @return True if the edge exists, false otherwise
+     */
     public boolean hasEdge(Vertex source, Vertex dest) {
         if (!hasVertex(source)) return false;
         return map.get(source).contains(dest);
     }
 
+    /**
+     * Returns the adjacency list of a given vertex.
+     * @param v The vertex to get the adjacency list for
+     * @return The adjacency list of the vertex
+     */
     public List<Vertex> adjacencyList(Vertex v) {
         if (!hasVertex(v)) return null;
-
         return map.get(v);
     }
-
-
-//    public static void main (String[] args) {
-//        private int numOfVertices;
-//        private LinkedList<Integer>[] adjList;
-//
-//    public MyGraph(int numOfVertices) {
-//            this.numOfVertices = numOfVertices;
-//            this.adjList = new LinkedList[numOfVertices];
-//            for (int i = 0; i < numOfVertices; i++) {
-//                adjList[i] = new LinkedList<Integer>();
-//            }
-//        }
-//
-//        public void addEdge(int source, int destination) {
-//            validateVertex(source);
-//            validateVertex(destination);
-//            adjList[source].add(destination);
-//            adjList[destination].add(source);
-//        }
-//
-//        public boolean hasEdge(int source, int destination) {
-//            validateVertex(source);
-//            validateVertex(destination);
-//            return adjList[source].contains(destination);
-//        }
-//
-//        private void validateVertex(int index) {
-//            if (index < 0 || index >= numOfVertices)
-//                throw new IndexOutOfBoundsException("Vertex does not exist");
-//        }
-//
-//        public void removeEdge(int source, int destination){
-//            validateVertex(source);
-//            validateVertex(destination);
-//            adjList[source].remove(adjList[source].indexOf(destination));
-//            adjList[destination].remove(adjList[destination].indexOf(source));
-//        }
-//
-//        public LinkedList<Integer> getNeighbors(int vertex) {
-//            validateVertex(vertex);
-//            return adjList[vertex];
-//        }
-//
-//        public void printGraph() {
-//            for (int i = 0; i < numOfVertices; i++) {
-//                System.out.print("Vertex " + i + " connected to " );
-//                for (int neighbor : adjList[i]) {
-//                    System.out.print(neighbor + " ");
-//                }
-//                System.out.println();
-//            }
-//    }
 }

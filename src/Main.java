@@ -1,28 +1,34 @@
 public class Main {
     public static void main(String[] args) {
+        // Create a weighted graph
         WeightedGraph<String> weightedGraph = new WeightedGraph<>(true);
         fillWithWeights(weightedGraph);
 
+        // Perform Dijkstra's algorithm and output the path
         System.out.println("Dijkstra:");
         Search<String> djk = new DijkstraSearch<>(weightedGraph, "Almaty");
         outputPath(djk, "Kyzylorda");
 
         System.out.println("--------------------------------");
 
+        // Create an unweighted graph
         MyGraph<String> graph = new MyGraph<>(true);
         fillWithoutWeights(graph);
 
+        // Perform Depth-First Search (DFS) and output the path
         System.out.println("DFS:");
         Search<String> dfs = new DepthFirstSearch<>(graph, "Almaty");
         outputPath(dfs, "Kyzylorda");
 
         System.out.println("--------------------------------");
 
+        // Perform Breadth-First Search (BFS) and output the path
         System.out.println("BFS:");
         Search<String> bfs = new BreadthFirstSearch<>(graph, "Almaty");
         outputPath(bfs, "Kyzylorda");
     }
 
+    // Fill the unweighted graph with edges
     public static void fillWithoutWeights(MyGraph<String> graph) {
         graph.addEdge("Almaty", "Astana");
         graph.addEdge("Shymkent", "Atyrau");
@@ -33,6 +39,7 @@ public class Main {
         graph.addEdge("Shymkent", "Kyzylorda");
     }
 
+    // Fill the weighted graph with edges and weights
     public static void fillWithWeights(WeightedGraph<String> graph) {
         graph.addEdge("Almaty", "Astana", 2.1);
         graph.addEdge("Shymkent", "Atyrau", 7.8);
@@ -43,6 +50,7 @@ public class Main {
         graph.addEdge("Shymkent", "Kyzylorda", 5.4);
     }
 
+    // Output the path to the specified vertex
     public static void outputPath(Search<String> search, String key) {
         Iterable<String> path = search.pathTo(key);
         if (path == null) {
@@ -54,53 +62,4 @@ public class Main {
             System.out.println();
         }
     }
-
-
-
-
-//    public static void main (String[] args) {
-//        MyGraph myGraph = new MyGraph(5);
-//        myGraph.addEdge(0,1);
-//        myGraph.addEdge(1,2);
-//        myGraph.addEdge(2,4);
-//        myGraph.addEdge(3,4);
-//        myGraph.addEdge(3,1);
-//
-//        System.out.println(myGraph.hasEdge(2, 3));
-//        System.out.println(myGraph.hasEdge(2, 4));
-//        myGraph.removeEdge(2, 4);
-//        System.out.println(myGraph.hasEdge(2,4));
-//
-//        System.out.println(myGraph.getNeighbors(1));
-//
-//        myGraph.printGraph();
-//
-//
-//        MyGraph<String> graph = new MyGraph<>();
-//
-//        graph.addVertex("Almaty");
-//        graph.addVertex("Astana");
-//        graph.addVertex("Shymkent");
-//        graph.addVertex("Pavlodar");
-//        graph.addVertex("Oral");
-//
-//        graph.addEdge("Almaty","Astana");
-//        graph.addEdge("Almaty","Shymkent");
-//        graph.addEdge("Astana","Pavlodar");
-//        graph.addEdge("Astana","Oral");
-//
-//
-//        System.out.println(graph.hasEdge("Almaty", "Astana"));
-//        System.out.println(graph.hasEdge("Almaty", "Pavlodar"));
-//
-//        System.out.println();
-//
-//        System.out.println(graph.getNeighbors("Almaty"));
-//
-//        graph.printGraph();
-//        System.out.println("_____________________________");
-//        graph.removeEdge("Astana", "Oral");
-//
-//        graph.printGraph();
-//    }
 }
